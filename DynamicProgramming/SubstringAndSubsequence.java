@@ -21,6 +21,7 @@ public class SubstringAndSubsequence{
                 for(int j=0;j<n;j++){
                     if(j == 0){
                         if(a.charAt(j) == b.charAt(i)) dp[i][j] = 1;
+                        max = Math.max(max, dp[i][j]);
                         continue;
                     }
                     if(j > 0) dp[i][j] = dp[i][j-1];
