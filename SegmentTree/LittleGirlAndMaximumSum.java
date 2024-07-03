@@ -1,4 +1,6 @@
 // Problem Link : https://codeforces.com/problemset/problem/276/C
+// This approach is not optimizezd as there is an efficient method to solve this problem without segment tree
+// But it is just implementation for practice
 // ************** Segment Tree Approach using Lazy Propagation and Memory Efficient Implementation ******************
 import java.util.*;
 public class LittleGirlAndMaximumSum{
