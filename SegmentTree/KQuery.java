@@ -110,3 +110,78 @@ class InputReader {
         return Integer.parseInt(next());
     }
 }
+/*
+************** C++ Code ************
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <bits/stdc++.h>
+using namespace std;
+
+class SegmentTree {
+public:
+    vector<vector<int>> list;
+    
+    SegmentTree(const vector<int>& arr, int n) {
+        list.resize(4 * n);
+        build(0, arr, 0, n - 1);
+    }
+    
+    void build(int pos, const vector<int>& arr, int l, int r) {
+        if (l == r) {
+            list[pos].push_back(arr[l]);
+        } else {
+            int mid = (l + r) / 2;
+            build(pos * 2 + 1, arr, l, mid);
+            build(pos * 2 + 2, arr, mid + 1, r);
+            merge(pos);
+        }
+    }
+
+    void merge(int pos) {
+        int left_child = pos * 2 + 1;
+        int right_child = pos * 2 + 2;
+        list[pos].resize(list[left_child].size() + list[right_child].size());
+        std::merge(list[left_child].begin(), list[left_child].end(),
+              list[right_child].begin(), list[right_child].end(),list[pos].begin());
+    }
+    
+    int query(int pos, int tl, int tr, int l, int r, int k) {
+        if (l > r)
+            return 0;
+        if (l == tl && tr == r)
+            return search(pos, k);
+        int tm = (tl + tr) / 2;
+        return query(pos * 2 + 1, tl, tm, l, min(r, tm), k)
+             + query(pos * 2 + 2, tm + 1, tr, max(l, tm + 1), r, k);
+    }
+    
+    int search(int pos, int k) {
+        auto it = upper_bound(list[pos].begin(), list[pos].end(), k);
+        return list[pos].end() - it;
+    }
+};
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int n;
+    cin >> n;
+    vector<int> arr(n);
+    for (int i = 0; i < n; ++i) cin >> arr[i];
+
+    SegmentTree tree(arr, n);
+    int q;
+    cin >> q;
+    for (int i = 0; i < q; ++i) {
+        int l, r, k;
+        cin >> l >> r >> k;
+        l--; r--;
+        cout << tree.query(0, 0, n - 1, l, r, k) << "\n";
+    }
+
+    return 0;
+}
+
+*/
